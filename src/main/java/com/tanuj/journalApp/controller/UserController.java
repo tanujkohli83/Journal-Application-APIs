@@ -33,6 +33,15 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<User > updateUser (@RequestBody User user){
-        return null;
+        User userInDB = userService.findBuUserName(user.getUserName());
+        if(userInDB != null){
+            userInDB.setUserName(user.getUserName());
+            userInDB.setPassword(user.getPassword());
+            userService.saveEntry(userInDB);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+
 }
